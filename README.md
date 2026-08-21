@@ -1101,74 +1101,6 @@ For that reason, intelligence functionality was added incrementally with explici
 
 ---
 
-# Project Architecture
-
-ADIP can be viewed as three major architectural layers.
-
-## Layer 1 — Intelligence Production
-
-This layer is responsible for transforming raw data into analytical artifacts.
-
-```text
-Raw Data
-    ↓
-Ingestion
-    ↓
-Transformation
-    ↓
-Feature Engineering
-    ↓
-Time-Series Generation
-    ↓
-Context Construction
-    ↓
-LLM Insight Generation
-```
-
-This layer produces the intelligence consumed by the application.
-
----
-
-## Layer 2 — Intelligence Delivery
-
-FastAPI acts as the system boundary between intelligence production and application consumption.
-
-```text
-Intelligence Artifacts
-        ↓
-FastAPI
-        ↓
-HTTP / JSON
-```
-
-The frontend receives structured responses rather than accessing implementation internals.
-
----
-
-## Layer 3 — Intelligence Consumption
-
-The analytical interface enables users to explore the delivered intelligence.
-
-```text
-HTTP / JSON
-      ↓
-API Client
-      ↓
-Application State
-      ↓
-Intelligence Modules
-      ↓
-Analytical Interface
-```
-
-This separation is intentional.
-
-The frontend is responsible for **presenting, exploring, and safely interpreting delivered intelligence**.
-
-The backend remains responsible for **producing and exposing the intelligence**.
-
----
-
 # What ADIP Is Not
 
 ADIP deliberately avoids several misleading architectural patterns.
@@ -1181,18 +1113,6 @@ It is not simply:
 * An LLM wrapper with no analytical infrastructure
 * A system that treats AI output as the same thing as measured data
 * A system that invents business meaning from unrelated metrics
-
-For example, ADIP does not automatically conclude:
-
-```text
-More listings = more sales
-Lower stock = higher demand
-Higher price = higher revenue
-More observations = better performance
-More brands = greater profitability
-```
-
-Those conclusions require evidence not necessarily present in the supplied datasets.
 
 ADIP instead preserves the distinction between:
 
@@ -1237,60 +1157,6 @@ The System Operations module intentionally reports only what the current backend
 
 ---
 
-# Known Architectural Constraints
-
-Several current constraints are intentional.
-
-## Client-side catalog operations
-
-Search, filtering, sorting, and pagination currently operate on loaded feature payloads.
-
-No server-side catalog query parameters are assumed unless explicitly provided by the backend contract.
-
----
-
-## No fabricated telemetry
-
-System Operations currently receives asset-existence information through the health endpoint.
-
-It does not claim visibility into:
-
-* Individual pipeline stages
-* Pipeline progress percentage
-* Job duration
-* Execution logs
-* Worker status
-* Completion state
-
-Those capabilities would require additional backend telemetry.
-
----
-
-## No AI regeneration from the frontend
-
-The analytical interface consumes backend-generated insight.
-
-It does not currently provide:
-
-* AI regeneration controls
-* Prompt editing
-* Browser-side model execution
-* Polling for AI completion
-
-These are outside the current contract.
-
----
-
-## Source-specific semantics remain preserved
-
-ADIP does not force all intelligence domains into a single universal field model.
-
-For example, Brand Intelligence intentionally preserves API and Web Scraper source differences.
-
-This avoids creating false equivalence between measurements with different meanings.
-
----
-
 # Future Evolution
 
 ADIP is designed as infrastructure rather than a one-off interface.
@@ -1303,7 +1169,8 @@ Potential future evolution includes:
 * Additional intelligence domains
 * New vertical applications
 * Expanded feature engineering
-* Additional time-series intelligence
+* Forecasting intelligence
+* Additional AI-assistant  
 * Richer context construction
 
 ### Backend Operations
@@ -1315,16 +1182,6 @@ Potential future evolution includes:
 * Pipeline stage visibility
 * Failure diagnostics
 * Background task monitoring
-
-### Application Capabilities
-
-* Authentication
-* Role-based access control
-* Saved analytical views
-* Server-side search and pagination
-* Larger-scale catalog handling
-* Expanded operational controls
-* Additional visualization capabilities
 
 ### Deployment
 
@@ -1421,11 +1278,3 @@ The project has progressed from isolated data-processing and ingestion experimen
 **Charles Onokohwomo**
 
 Technologist · AI Systems Architect · AI Engineer · Mechanical Engineer
-
----
-
-## ADIP
-
-**Automated Data Intelligence Platform**
-
-*Building analytical intelligence infrastructure that transforms raw data into structured insight.*
