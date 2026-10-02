@@ -1237,4 +1237,4 @@ The project has progressed from isolated data-processing and ingestion experimen
 
 **Charles Onokohwomo**
 
-Technologust · Python Engineer · Backend & Data Engineer · Applied AI
+Technologist· Python Engineer · Backend & Data Engineer · Applied AI Infrastructure
